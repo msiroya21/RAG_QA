@@ -46,23 +46,60 @@ pip install -r requirements.txt
 
 ## Quick Start
 
-### 1. Prepare Documents
+### ⚡ Option 1: Test With Pre-Indexed Dataset (Recommended First)
 
-Place PDF files in `data/raw/` directory.
-
-### 2. Ingest PDFs
-
-```bash
-python run_pipeline.py
-```
-
-This processes all PDFs in `data/raw/`, extracts text/tables/boxes, creates embeddings, and stores them in ChromaDB.
-
-### 3. Launch the App
+A sample IMF document (`qatar_test_doc.pdf`) is already included in `data/raw/` with a pre-indexed ChromaDB vector store. You can test the system immediately:
 
 ```bash
 streamlit run src/app/ui.py
 ```
+
+The app will load the pre-indexed Qatar document. Try asking questions like:
+- "What is the IMF's assessment of Qatar's economy?"
+- "What are the key challenges mentioned?"
+- "What fiscal measures are discussed?"
+
+The vector store (`data/chroma_db/`) is pre-populated, so no ingestion needed.
+
+### 📁 Option 2: Use Your Own Documents
+
+To replace the demo dataset with your own PDFs:
+
+#### Step 1: Clear the Demo Data
+```bash
+# Delete old vector store
+rmdir /s data\chroma_db
+
+# Delete old PDF
+del data\raw\qatar_test_doc.pdf
+```
+
+#### Step 2: Add Your PDFs
+```bash
+# Copy your PDF files to data/raw/
+# Example:
+# copy C:\path\to\your\document.pdf data\raw\
+```
+
+#### Step 3: Ingest Your Documents
+```bash
+python run_pipeline.py
+```
+
+This processes all PDFs in `data/raw/`, extracts text/tables/boxes, creates embeddings, and stores them in ChromaDB (rebuilds the vector store).
+
+#### Step 4: Launch the App
+```bash
+streamlit run src/app/ui.py
+```
+
+### 📋 Complete Workflow Summary
+
+| Step | Command | Purpose |
+|------|---------|---------|
+| 1 | `pip install -r requirements.txt` | Install dependencies |
+| 2 | `python run_pipeline.py` | Ingest PDFs → Create embeddings → Build vector store |
+| 3 | `streamlit run src/app/ui.py` | Launch interactive chat UI |
 
 ## Features
 
